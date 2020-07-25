@@ -56,7 +56,7 @@ public class CheckCollision : MonoBehaviour
 
         for (int i = 0; i < 6; i++)
         {
-            if (Physics.Raycast(transform.position, checkPoints[i].transform.position - this.transform.position, out hit, 1.5f, 1 << 8))
+            if (Physics.Raycast(transform.position, checkPoints[i].transform.position - this.transform.position, out hit, 1.5f, LayerMask.NameToLayer("Cube")))
             {
                 if (connect)
                 {

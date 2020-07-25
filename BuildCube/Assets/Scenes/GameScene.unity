@@ -151,8 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoManageScriptDefines: 1
   activeScriptingDefineSymbolsWithoutSDKClasses: []
-  scriptAliasLeftController: {fileID: 0}
-  scriptAliasRightController: {fileID: 0}
+  scriptAliasLeftController: {fileID: 1900059347}
+  scriptAliasRightController: {fileID: 1246739812}
   autoManageVRSettings: 1
   autoLoadSetup: 1
   setups:
@@ -787,6 +787,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11489174, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
       propertyPath: size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2082592, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.19215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2082592, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2082592, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.4745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2082592, guid: 4d293c8e162f3874b982baadd71153d2, type: 3}
+      propertyPath: m_BackGroundColor.a
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -2609,7 +2625,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnTriggerPressed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1336991426}
+        m_MethodName: SwitchMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTriggerReleased:
     m_PersistentCalls:
       m_Calls: []
@@ -2943,7 +2970,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11396f8210bc01e40b97c93d51fd7fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMode: 0
+  CurrentMode: 0
+  BuildCube: {fileID: 1666081062}
+  Pointer: {fileID: 1900059355}
 --- !u!114 &1336991427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3261,7 +3290,7 @@ Camera:
   m_GameObject: {fileID: 1471056149}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3515,7 +3544,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666081058}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1666081060
 Camera:
   m_ObjectHideFlags: 0
@@ -4560,9 +4589,9 @@ MonoBehaviour:
   pointer: {fileID: 0}
   hoverColor: {r: 1, g: 0, b: 0, a: 1}
   selectColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  logEnterEvent: 1
+  logEnterEvent: 0
   logHoverEvent: 0
-  logExitEvent: 1
+  logExitEvent: 0
   logSetEvent: 1
 --- !u!114 &1900059351
 MonoBehaviour:

@@ -33,7 +33,7 @@ public class BuildCube : MonoBehaviour
     void Update()
     {
         // 創造被移動的方塊
-        if (setCube == null && EditUI.currentMode == EditUI.Mode.Edit)
+        if (setCube == null && EditUI.CurrentMode == EditUI.Mode.Edit)
         {
             setCube = Instantiate(SetCubePrefab, cameraPosition + new Vector3(0, 0, 0.5f), new Quaternion(0, 0, 0, 0));
             setCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.white);
@@ -93,7 +93,9 @@ public class BuildCube : MonoBehaviour
             Debug.Log("No SDK Found!");
         }
 
-        Create(new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0)).GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.cyan);
+        GameObject centerCube = Create(new Vector3(0, 0, 0), Quaternion.identity);
+        centerCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.cyan);
+        centerCube.name = "Cube0";
         center.transform.localPosition = new Vector3(0, 0, 0);
         controllerEvents = (controllerEvents == null ? GameObject.FindObjectOfType<VRTK.VRTK_ControllerEvents>() : controllerEvents);
 
@@ -156,7 +158,7 @@ public class BuildCube : MonoBehaviour
     /// </summary>
     public void DrawLine()
     {
-        if (EditUI.currentMode == EditUI.Mode.Edit || controllerEvents != null)
+        if (EditUI.CurrentMode == EditUI.Mode.Edit || controllerEvents != null)
             return;
 
         RaycastHit hit;
@@ -174,7 +176,7 @@ public class BuildCube : MonoBehaviour
 
             float rate = (hit.transform.position.z - ray.origin.z) / (ray.direction.z * 20);
             lineRenderer.SetPosition(1, ray.origin + ray.direction * (20 * rate));
-            if (currentCube.name != "Cube0")
+            if (currentCube.name != "0")
                 currentCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.red);
         }
     }

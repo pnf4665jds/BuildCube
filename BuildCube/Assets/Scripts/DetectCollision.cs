@@ -20,20 +20,9 @@ public class DetectCollision : MonoBehaviour
         // 按下特定按鈕時才擺上方塊
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetCube();
+            //SetCube();
         }
         targetCollider = CollisionEnterCheck();
-    }
-
-    /// <summary>
-    /// 取得產生方塊的座標
-    /// </summary>
-    private void GetSpawnPosition()
-    {
-        if (targetCollider != null)
-        {
-            spawnPosition = CheckCollisionPoint(targetCollider.gameObject);
-        }
     }
 
     /// <summary>
@@ -86,7 +75,12 @@ public class DetectCollision : MonoBehaviour
     /// </summary>
     public void SetCube()
     {
-        GetSpawnPosition();
+        // 取得產生方塊的座標
+        if (targetCollider != null)
+        {
+            spawnPosition = CheckCollisionPoint(targetCollider.gameObject);
+        }
+
         if (targetCollider != null)
         {
             //GameAudioController.Instance.PlayOneShot(setCubeSE);
