@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
+using UnityEngine.UI;
 
 public class EditUI : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class EditUI : MonoBehaviour
     public Mode CurrentMode;
     public BuildCube BuildCube;
     public VRTK_Pointer Pointer;
+    public GameObject SimulatorCamera, SteamVRCamera;
+    public Text TimerText;
+
+    private float timer = 0;
 
     /// <summary>
     /// 切換模式
@@ -37,6 +42,16 @@ public class EditUI : MonoBehaviour
             //SaveButton.interactable = true;
             //LoadButton.interactable = true;
             Pointer.enabled = false;
+        }
+    }
+
+    public IEnumerator Timer()
+    {
+        while (true)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+            TimerText.text = timer.ToString("0.00");
         }
     }
 }

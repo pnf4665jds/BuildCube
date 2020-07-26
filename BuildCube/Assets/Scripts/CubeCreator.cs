@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeCreator : MonoBehaviour
+public class CubeCreator : Singleton<CubeCreator>
 {
     public GameObject NormalCubePrefab;
 

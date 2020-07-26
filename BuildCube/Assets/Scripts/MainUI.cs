@@ -9,7 +9,6 @@ public class MainUI : MonoBehaviour
     public InputField IdField;
     public Button StartButton;
     public Dropdown CubeDropdown;
-    public CubeCreator Creator;
     public GameObject CubeParent;
 
     private GameObject cube;
@@ -18,7 +17,13 @@ public class MainUI : MonoBehaviour
     {
         StartButton.onClick.AddListener(delegate
         {
-            SceneManager.LoadScene("GameScene");
+            if (CubeDropdown.captionText.text != "--") {
+                UIData data = new UIData();
+                data.UserID = IdField.text;
+                data.TargetCube = CubeDropdown.captionText.text;
+                GameData.instance.Data = data;
+                SceneManager.LoadScene("GameScene");
+            }
         });
 
         CubeDropdown.onValueChanged.AddListener(delegate
@@ -32,7 +37,7 @@ public class MainUI : MonoBehaviour
     {
         if (cube)
             Destroy(cube);
-        cube = Creator.GetCubic(name);
+        cube = CubeCreator.instance.GetCubic(name);
         cube.transform.position = new Vector3(6, 0, 0);
     }
 }

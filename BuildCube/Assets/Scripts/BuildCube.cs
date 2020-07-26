@@ -10,13 +10,11 @@ public class BuildCube : MonoBehaviour
     public GameObject MainCubicPrefab;      // 被組合的大方塊
     public GameObject SimulatorRightHand;   // VR Simulator的右手柄
     public GameObject SteamVRRightHand;     // SteamVR的右手柄
-    public CubeCreator Creator;
     public EditUI EditUI;
-    public GameObject SimulatorCamera, SteamVRCamera;
 
-    public GameObject setCube { get; protected set; }
-    public GameObject center { get; protected set; }
-    public GameObject lineEndObject { get; protected set; }
+    public GameObject SetCube { get; protected set; }
+    public GameObject Center { get; protected set; }
+    public GameObject LineEndObject { get; protected set; }
 
     private string deviceName;
     private LineRenderer lineRenderer;
@@ -27,22 +25,23 @@ public class BuildCube : MonoBehaviour
 
     void Start()
     {
+        Center = Instantiate(MainCubicPrefab);
         StartCoroutine(SetCubeOnController());
     }
 
     void Update()
     {
         // 創造被移動的方塊
-        if (setCube == null && EditUI.CurrentMode == EditUI.Mode.Edit)
+        if (SetCube == null && EditUI.CurrentMode == EditUI.Mode.Edit)
         {
-            setCube = Instantiate(SetCubePrefab, cameraPosition + new Vector3(0, 0, 0.5f), new Quaternion(0, 0, 0, 0));
-            setCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.white);
-            setCube.transform.localScale = new Vector3(1, 1, 1) * 0.05f;
+            SetCube = Instantiate(SetCubePrefab, cameraPosition + new Vector3(0, 0, 0.5f), new Quaternion(0, 0, 0, 0));
+            SetCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
+            SetCube.transform.localScale = new Vector3(1, 1, 1) * 0.05f;
         }
         GetCamera();
-        if (setCube != null && setCube.GetComponentsInChildren<Transform>().Length <= 1)   // 如果還沒拿起setCube(白色方塊)
+        if (SetCube != null && SetCube.GetComponentsInChildren<Transform>().Length <= 1)   // 如果還沒拿起setCube(白色方塊)
         {
-            setCube.transform.position = cameraPosition + new Vector3(0, 0, 0.5f);
+            SetCube.transform.position = cameraPosition + new Vector3(0, 0, 0.5f);
         }
         //InputControl();
         DrawLine();
@@ -58,11 +57,11 @@ public class BuildCube : MonoBehaviour
             string deviceName = VRTK_SDKManager.instance.loadedSetup.gameObject.name;
             if (deviceName == "VRSimulator")
             {
-                cameraPosition = SimulatorCamera.gameObject.transform.position;
+                cameraPosition = EditUI.SimulatorCamera.gameObject.transform.position;
             }
             if (deviceName == "SteamVR")
             {
-                cameraPosition = SteamVRCamera.gameObject.transform.position;
+                cameraPosition = EditUI.SteamVRCamera.gameObject.transform.position;
             }
         }
         catch
@@ -78,15 +77,13 @@ public class BuildCube : MonoBehaviour
     private IEnumerator SetCubeOnController()
     {
         yield return new WaitForSeconds(0.1f);
-
-        center = Instantiate(MainCubicPrefab);
         try
         {
             deviceName = VRTK_SDKManager.instance.loadedSetup.gameObject.name;
             if (deviceName == "VRSimulator")
-                center.transform.parent = SimulatorRightHand.transform;
+                Center.transform.parent = SimulatorRightHand.transform;
             if (deviceName == "SteamVR")
-                center.transform.parent = SteamVRRightHand.transform;
+                Center.transform.parent = SteamVRRightHand.transform;
         }
         catch
         {
@@ -94,10 +91,10 @@ public class BuildCube : MonoBehaviour
         }
 
         GameObject centerCube = Create(new Vector3(0, 0, 0), Quaternion.identity);
-        centerCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.cyan);
+        centerCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.cyan);
         centerCube.name = "Cube0";
-        center.transform.localPosition = new Vector3(0, 0, 0);
-        controllerEvents = (controllerEvents == null ? GameObject.FindObjectOfType<VRTK.VRTK_ControllerEvents>() : controllerEvents);
+        Center.transform.localPosition = new Vector3(0, 0, 0);
+        controllerEvents = (controllerEvents ? GameObject.FindObjectOfType<VRTK.VRTK_ControllerEvents>() : controllerEvents);
 
         GetCamera();
     }
@@ -107,7 +104,7 @@ public class BuildCube : MonoBehaviour
     /// </summary>
     public GameObject Create(Vector3 pos, Quaternion rotation)
     {
-        return Creator.CreateCube(center, pos, rotation);
+        return CubeCreator.instance.CreateCube(Center, pos, rotation);
     }
 
     /// <summary>
@@ -129,10 +126,10 @@ public class BuildCube : MonoBehaviour
     {
         if (controllerEvents != null)
             return;
-        Destroy(lineEndObject);
+        Destroy(LineEndObject);
         if (currentCube != null && currentCube.name != "Cube0")
         {
-            currentCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.white);
+            currentCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
         }
     }
 
@@ -141,13 +138,13 @@ public class BuildCube : MonoBehaviour
     /// </summary>
     public void DeleteModeInitialize()
     {
-        Destroy(setCube);
+        Destroy(SetCube);
         if (controllerEvents != null)
         {
             return;
         }
-        lineEndObject = Instantiate(LinePrefab, new Vector3(0, 0, 20), new Quaternion(0, 0, 0, 1));
-        lineRenderer = lineEndObject.GetComponent<LineRenderer>();
+        LineEndObject = Instantiate(LinePrefab, new Vector3(0, 0, 20), new Quaternion(0, 0, 0, 1));
+        lineRenderer = LineEndObject.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         lineRenderer.startWidth = 0.05f;
         lineRenderer.endWidth = 0.05f;
@@ -161,15 +158,14 @@ public class BuildCube : MonoBehaviour
         if (EditUI.CurrentMode == EditUI.Mode.Edit || controllerEvents != null)
             return;
 
-        RaycastHit hit;
         // 產生一個指向lineEndObject的射線
-        Ray ray = new Ray(new Vector3(0, 0, -10), lineEndObject.transform.position - new Vector3(0, 0, -10));
+        Ray ray = new Ray(new Vector3(0, 0, -10), LineEndObject.transform.position - new Vector3(0, 0, -10));
         lineRenderer.SetPosition(0, ray.origin);
         lineRenderer.SetPosition(1, ray.origin + ray.direction * 20);
         // 射線碰撞偵測
         if (previousCube != null && previousCube.name != "Cube0")
-            previousCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.white);
-        if (Physics.Raycast(ray, out hit, 1000, 1 << 8))
+            previousCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000, 1 << 8))
         {
             previousCube = currentCube;
             currentCube = hit.transform.gameObject;
@@ -177,7 +173,7 @@ public class BuildCube : MonoBehaviour
             float rate = (hit.transform.position.z - ray.origin.z) / (ray.direction.z * 20);
             lineRenderer.SetPosition(1, ray.origin + ray.direction * (20 * rate));
             if (currentCube.name != "0")
-                currentCube.GetComponent<Renderer>().material.mainTexture = Creator.Fill(Color.red);
+                currentCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.red);
         }
     }
 
