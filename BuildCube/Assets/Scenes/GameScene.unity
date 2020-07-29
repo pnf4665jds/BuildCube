@@ -3704,8 +3704,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SetCubePrefab: {fileID: 3636941315559585473, guid: 4195d8ee6be6f2c4eb91250b6d0247fe,
     type: 3}
-  LinePrefab: {fileID: 6708428672721463775, guid: ad926b94d4f5f704fbf53ce3d7108405,
-    type: 3}
   MainCubicPrefab: {fileID: 302978232411658636, guid: 5d6248e131cdfcc4fbb9811780c9d434,
     type: 3}
   SimulatorRightHand: {fileID: 784213106}
@@ -4684,10 +4682,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1e627535debf640acf02ca36bfda14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointer: {fileID: 0}
+  pointer: {fileID: 1900059355}
   hoverColor: {r: 1, g: 0, b: 0, a: 1}
   selectColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  logEnterEvent: 0
+  logEnterEvent: 1
   logHoverEvent: 0
   logExitEvent: 0
   logSetEvent: 1
@@ -4836,7 +4834,7 @@ MonoBehaviour:
   cursorVisibility: 0
   maximumLength: 100
   scaleFactor: 0.002
-  cursorScaleMultiplier: 25
+  cursorScaleMultiplier: 2
   cursorMatchTargetRotation: 0
   cursorDistanceRescale: 0
   maximumCursorScale: {x: Infinity, y: Infinity, z: Infinity}

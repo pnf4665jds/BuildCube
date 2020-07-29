@@ -52,11 +52,9 @@ public class CheckCollision : MonoBehaviour
     /// <param name="connect"></param>
     public void CheckPointControl(bool connect)
     {
-        RaycastHit hit;
-
         for (int i = 0; i < 6; i++)
         {
-            if (Physics.Raycast(transform.position, checkPoints[i].transform.position - this.transform.position, out hit, 1.5f, LayerMask.NameToLayer("Cube")))
+            if (Physics.Raycast(transform.position, checkPoints[i].transform.position - this.transform.position, out RaycastHit hit, 1.5f, LayerMask.NameToLayer("Cube")))
             {
                 if (connect)
                 {

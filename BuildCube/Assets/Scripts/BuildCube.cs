@@ -6,7 +6,6 @@ using VRTK;
 public class BuildCube : MonoBehaviour
 {
     public GameObject SetCubePrefab;        // 用於擺設的方塊
-    public GameObject LinePrefab;           // 鍵盤模式下的射線
     public GameObject MainCubicPrefab;      // 被組合的大方塊
     public GameObject SimulatorRightHand;   // VR Simulator的右手柄
     public GameObject SteamVRRightHand;     // SteamVR的右手柄
@@ -14,10 +13,8 @@ public class BuildCube : MonoBehaviour
 
     public GameObject SetCube { get; protected set; }
     public GameObject Center { get; protected set; }
-    public GameObject LineEndObject { get; protected set; }
 
     private string deviceName;
-    private LineRenderer lineRenderer;
     private GameObject previousCube;
     private GameObject currentCube;
     private VRTK_ControllerEvents controllerEvents;
@@ -43,8 +40,6 @@ public class BuildCube : MonoBehaviour
         {
             SetCube.transform.position = cameraPosition + new Vector3(0, 0, 0.5f);
         }
-        //InputControl();
-        DrawLine();
     }
 
     /// <summary>
@@ -126,7 +121,6 @@ public class BuildCube : MonoBehaviour
     {
         if (controllerEvents != null)
             return;
-        Destroy(LineEndObject);
         if (currentCube != null && currentCube.name != "Cube0")
         {
             currentCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
@@ -139,42 +133,5 @@ public class BuildCube : MonoBehaviour
     public void DeleteModeInitialize()
     {
         Destroy(SetCube);
-        if (controllerEvents != null)
-        {
-            return;
-        }
-        LineEndObject = Instantiate(LinePrefab, new Vector3(0, 0, 20), new Quaternion(0, 0, 0, 1));
-        lineRenderer = LineEndObject.GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 2;
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
     }
-
-    /// <summary>
-    /// 刪除模式中畫出提示線
-    /// </summary>
-    public void DrawLine()
-    {
-        if (EditUI.CurrentMode == EditUI.Mode.Edit || controllerEvents != null)
-            return;
-
-        // 產生一個指向lineEndObject的射線
-        Ray ray = new Ray(new Vector3(0, 0, -10), LineEndObject.transform.position - new Vector3(0, 0, -10));
-        lineRenderer.SetPosition(0, ray.origin);
-        lineRenderer.SetPosition(1, ray.origin + ray.direction * 20);
-        // 射線碰撞偵測
-        if (previousCube != null && previousCube.name != "Cube0")
-            previousCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000, 1 << 8))
-        {
-            previousCube = currentCube;
-            currentCube = hit.transform.gameObject;
-
-            float rate = (hit.transform.position.z - ray.origin.z) / (ray.direction.z * 20);
-            lineRenderer.SetPosition(1, ray.origin + ray.direction * (20 * rate));
-            if (currentCube.name != "0")
-                currentCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.red);
-        }
-    }
-
 }

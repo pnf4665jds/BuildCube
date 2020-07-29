@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
+using UnityEngine.SceneManagement;
 
 public class BuildTask : MonoBehaviour
 {
@@ -65,21 +66,26 @@ public class BuildTask : MonoBehaviour
         TargetDistanceList.Sort();
     }
 
+    /// <summary>
+    /// 遊戲運行
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Process()
     {
         yield return null;
         BuildingCube = GameObject.FindWithTag("MainCubic");
         while (!IsFinshed)
         {
-            Debug.Log("Wait");
+            // 下面這行是避免CheckIfSame回傳False時進入無限迴圈
             yield return new WaitUntil(() => TargetCube.transform.childCount != BuildingCube.transform.childCount);
             // 等到玩家拼出同樣數量的小方塊時才判斷
-            Debug.Log("Wait2");
             yield return new WaitUntil(() => TargetCube.transform.childCount == BuildingCube.transform.childCount);
             IsFinshed = CheckIfSame();
         }
         Debug.Log("win");
         StopCoroutine(timer);
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("MainUI");
     }
 
     /// <summary>

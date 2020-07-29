@@ -17,11 +17,6 @@ public class DetectCollision : MonoBehaviour
 
     private void Update()
     {
-        // 按下特定按鈕時才擺上方塊
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //SetCube();
-        }
         targetCollider = CollisionEnterCheck();
     }
 

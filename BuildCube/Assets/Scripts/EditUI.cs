@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class EditUI : MonoBehaviour
 {
+    /// <summary>
+    /// 操作模式
+    /// </summary>
     public enum Mode
     {
-        Edit,
-        Delete
+        Edit,   // 編輯模式，可添加方塊
+        Delete  // 刪除模式，可移除方塊
     }
 
     public Mode CurrentMode;
@@ -45,6 +48,10 @@ public class EditUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 花費時間Timer
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator Timer()
     {
         while (true)

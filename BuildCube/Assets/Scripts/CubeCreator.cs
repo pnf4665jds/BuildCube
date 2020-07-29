@@ -26,7 +26,7 @@ public class CubeCreator : Singleton<CubeCreator>
     }
 
     /// <summary>
-    /// 創造方塊
+    /// 創造小方塊
     /// </summary>
     public GameObject CreateCube(GameObject center, Vector3 pos, Quaternion rotation)
     {

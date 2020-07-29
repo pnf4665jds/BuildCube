@@ -15,9 +15,14 @@ public class MainUI : MonoBehaviour
 
     private void Start()
     {
+        // 回到UI時開啟鼠標
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         StartButton.onClick.AddListener(delegate
         {
             if (CubeDropdown.captionText.text != "--") {
+                // 生成一個UIData來儲存所需資料
                 UIData data = new UIData();
                 data.UserID = IdField.text;
                 data.TargetCube = CubeDropdown.captionText.text;
@@ -33,6 +38,10 @@ public class MainUI : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// 讀取方塊
+    /// </summary>
+    /// <param name="name"></param>
     private void LoadCube(string name)
     {
         if (cube)
