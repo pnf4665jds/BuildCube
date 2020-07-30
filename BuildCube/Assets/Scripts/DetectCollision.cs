@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DetectCollision : MonoBehaviour
 {
-    public AudioClip setCubeSE;     // 設置方塊的音效
-
     private BuildCube buildCube;
     private Vector3 spawnPosition;
     private Collider targetCollider;
@@ -43,7 +41,7 @@ public class DetectCollision : MonoBehaviour
     }
 
     /// <summary>
-    /// 檢查方塊的碰撞面
+    /// 透過檢查點找到最近的面來連接
     /// </summary>
     private Vector3 CheckCollisionPoint(GameObject coObject)
     {
@@ -51,7 +49,7 @@ public class DetectCollision : MonoBehaviour
         int targetIndex = 0;
         Vector3 center = transforms[0].position;
         float minDistance = 1000;
-        // 計算碰撞點離哪個檢查點最近
+        // 計算方塊離哪個檢查點最近
         for (int i = 1; i < transforms.Length; i++)
         {
             float distance = Vector3.Distance(transforms[i].position, gameObject.transform.position);

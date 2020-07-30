@@ -3726,6 +3726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EditUI: {fileID: 1336991426}
+  FinishSound: {fileID: 8300000, guid: 90053c243ca293849a1118e1f8fd1075, type: 3}
 --- !u!1 &1678023102
 GameObject:
   m_ObjectHideFlags: 0
@@ -4689,10 +4690,10 @@ MonoBehaviour:
   pointer: {fileID: 1900059355}
   hoverColor: {r: 1, g: 0, b: 0, a: 1}
   selectColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  logEnterEvent: 1
+  logEnterEvent: 0
   logHoverEvent: 0
   logExitEvent: 0
-  logSetEvent: 1
+  logSetEvent: 0
 --- !u!114 &1900059351
 MonoBehaviour:
   m_ObjectHideFlags: 0

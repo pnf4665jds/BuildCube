@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class BuildTask : MonoBehaviour
 {
-    public EditUI EditUI;
+    public EditUI EditUI;           // 遊戲UI
+    public AudioClip FinishSound;   // 完成音效
 
     private GameObject TargetCube;     // 要蓋的目標方塊
     private GameObject BuildingCube;   // 手上的方塊
-    private List<float> TargetDistanceList;  // 紀錄目標方塊中兩兩小方塊的彼此距離，並排序
-    private List<float> BuildingDistanceList;  // 紀錄目標方塊中兩兩小方塊的彼此距離，並排序
+    private List<float> TargetDistanceList;     // 紀錄目標方塊中兩兩小方塊的彼此距離，並排序
+    private List<float> BuildingDistanceList;   // 紀錄操作方塊中兩兩小方塊的彼此距離，並排序
     private bool IsFinshed = false;
     private Vector3 cameraPosition;
     private IEnumerator timer;
@@ -84,7 +85,14 @@ public class BuildTask : MonoBehaviour
         }
         Debug.Log("win");
         StopCoroutine(timer);
-        yield return new WaitForSeconds(3);
+        // 結束後關閉VRTK_ControllerEvents，讓玩家無法再進行操作
+        foreach(VRTK_ControllerEvents events in FindObjectsOfType<VRTK_ControllerEvents>())
+        {
+            events.enabled = false;
+        }
+
+        GameAudioManager.instance.PlaySound(FinishSound);
+        yield return new WaitForSeconds(FinishSound.length);
         SceneManager.LoadScene("MainUI");
     }
 

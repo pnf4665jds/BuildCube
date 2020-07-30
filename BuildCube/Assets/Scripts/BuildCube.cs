@@ -15,8 +15,6 @@ public class BuildCube : MonoBehaviour
     public GameObject Center { get; protected set; }
 
     private string deviceName;
-    private GameObject previousCube;
-    private GameObject currentCube;
     private VRTK_ControllerEvents controllerEvents;
     private Vector3 cameraPosition;
 
@@ -47,21 +45,13 @@ public class BuildCube : MonoBehaviour
     /// </summary>
     private void GetCamera()
     {
-        try
+        if (deviceName == "VRSimulator")
         {
-            string deviceName = VRTK_SDKManager.instance.loadedSetup.gameObject.name;
-            if (deviceName == "VRSimulator")
-            {
-                cameraPosition = EditUI.SimulatorCamera.gameObject.transform.position;
-            }
-            if (deviceName == "SteamVR")
-            {
-                cameraPosition = EditUI.SteamVRCamera.gameObject.transform.position;
-            }
+            cameraPosition = EditUI.SimulatorCamera.gameObject.transform.position;
         }
-        catch
+        else if (deviceName == "SteamVR")
         {
-            Debug.Log("No SDK Found!");
+            cameraPosition = EditUI.SteamVRCamera.gameObject.transform.position;
         }
     }
 
@@ -72,26 +62,19 @@ public class BuildCube : MonoBehaviour
     private IEnumerator SetCubeOnController()
     {
         yield return new WaitForSeconds(0.1f);
-        try
-        {
-            deviceName = VRTK_SDKManager.instance.loadedSetup.gameObject.name;
-            if (deviceName == "VRSimulator")
-                Center.transform.parent = SimulatorRightHand.transform;
-            if (deviceName == "SteamVR")
-                Center.transform.parent = SteamVRRightHand.transform;
-        }
-        catch
-        {
-            Debug.Log("No SDK Found!");
-        }
 
+        deviceName = VRTK_SDKManager.instance.loadedSetup.gameObject.name;
+        if (deviceName == "VRSimulator")
+            Center.transform.parent = SimulatorRightHand.transform;
+        if (deviceName == "SteamVR")
+            Center.transform.parent = SteamVRRightHand.transform;
+
+        // 產生一個方塊
         GameObject centerCube = Create(new Vector3(0, 0, 0), Quaternion.identity);
         centerCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.cyan);
         centerCube.name = "Cube0";
         Center.transform.localPosition = new Vector3(0, 0, 0);
         controllerEvents = (controllerEvents ? GameObject.FindObjectOfType<VRTK.VRTK_ControllerEvents>() : controllerEvents);
-
-        GetCamera();
     }
 
     /// <summary>
@@ -103,27 +86,18 @@ public class BuildCube : MonoBehaviour
     }
 
     /// <summary>
-    /// 刪除方塊
-    /// </summary>
-    public void Delete()
-    {
-        if (currentCube != null && currentCube.name == "Cube0")
-        {
-            return;
-        }
-        Destroy(currentCube);
-    }
-
-    /// <summary>
     /// 編輯模式初始化
     /// </summary>
     public void EditModeInitialize()
     {
         if (controllerEvents != null)
             return;
-        if (currentCube != null && currentCube.name != "Cube0")
+        foreach (Renderer renderer in Center.GetComponentsInChildren<Renderer>())
         {
-            currentCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
+            if (renderer.gameObject.name != "Cube0")
+            {
+                renderer.material.mainTexture = CubeCreator.instance.Fill(Color.white);
+            }
         }
     }
 

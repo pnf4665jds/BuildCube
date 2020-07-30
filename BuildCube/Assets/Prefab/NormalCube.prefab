@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3abaf4521bf2344ea21ed3020b98eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableWhenIdle: 1
+  disableWhenIdle: 0
   allowedNearTouchControllers: 0
   allowedTouchControllers: 0
   ignoredColliders: []
@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9220d48192917514da34d6c7fa3fe145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SetCubeSound: {fileID: 8300000, guid: 26150a8c43ed65247bb75d17d265bdcd, type: 3}
 --- !u!114 &1740267699479788989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +219,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d90e06ac675e740b0014263e60b9ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeleteSound: {fileID: 8300000, guid: 816edcf2414977041a35382cacd55ed7, type: 3}
