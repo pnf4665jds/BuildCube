@@ -73,6 +73,9 @@ public class BuildTask : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Process()
     {
+        yield return new WaitForSeconds(5);
+        GameEventCenter.DispatchEvent("BuildStart");
+
         yield return null;
         BuildingCube = GameObject.FindWithTag("MainCubic");
         while (!IsFinshed)
@@ -91,6 +94,7 @@ public class BuildTask : MonoBehaviour
             events.enabled = false;
         }
 
+        EditUI.ShowResult();
         GameAudioManager.instance.PlaySound(FinishSound);
         yield return new WaitForSeconds(FinishSound.length);
         SceneManager.LoadScene("MainUI");

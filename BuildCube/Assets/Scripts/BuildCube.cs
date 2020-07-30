@@ -18,13 +18,12 @@ public class BuildCube : MonoBehaviour
     private VRTK_ControllerEvents controllerEvents;
     private Vector3 cameraPosition;
 
-    void Start()
+    private void Start()
     {
-        Center = Instantiate(MainCubicPrefab);
-        StartCoroutine(SetCubeOnController());
+        GameEventCenter.AddEvent("BuildStart", BuildStart);
     }
 
-    void Update()
+    private void Update()
     {
         // 創造被移動的方塊
         if (SetCube == null && EditUI.CurrentMode == EditUI.Mode.Edit)
@@ -38,6 +37,15 @@ public class BuildCube : MonoBehaviour
         {
             SetCube.transform.position = cameraPosition + new Vector3(0, 0, 0.5f);
         }
+    }
+
+    /// <summary>
+    /// 呼叫此函式來生成Cube在手把上
+    /// </summary>
+    public void BuildStart()
+    {
+        Center = Instantiate(MainCubicPrefab);
+        StartCoroutine(SetCubeOnController());
     }
 
     /// <summary>
