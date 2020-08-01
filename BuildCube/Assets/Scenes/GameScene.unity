@@ -3209,10 +3209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentMode: 0
-  BuildCube: {fileID: 1666081062}
-  Pointer: {fileID: 1900059355}
-  SimulatorCamera: {fileID: 1471056149}
-  SteamVRCamera: {fileID: 206411413}
   TimerText: {fileID: 1329621844}
   ResultText: {fileID: 420369188}
 --- !u!114 &1336991427
@@ -3490,6 +3486,62 @@ MonoBehaviour:
   startMenuAlias: 102
   touchModifier: 116
   hairTouchModifier: 104
+--- !u!1 &1450845333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450845335}
+  - component: {fileID: 1450845334}
+  m_Layer: 0
+  m_Name: SceneRes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1450845334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450845333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b66b1800b933747a010ff105ac46be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EditUI: {fileID: 1336991426}
+  Pointer: {fileID: 1900059355}
+  SimulatorCamera: {fileID: 1471056149}
+  SteamVRCamera: {fileID: 206411413}
+  LeftEvent: {fileID: 1900059349}
+  RightEvent: {fileID: 1246739814}
+  SetCubePrefab: {fileID: 3636941315559585473, guid: 4195d8ee6be6f2c4eb91250b6d0247fe,
+    type: 3}
+  MainCubicPrefab: {fileID: 302978232411658636, guid: 5d6248e131cdfcc4fbb9811780c9d434,
+    type: 3}
+  SimulatorRightHand: {fileID: 784213106}
+  SteamVRRightHand: {fileID: 206411415}
+  FinishSound: {fileID: 8300000, guid: 90053c243ca293849a1118e1f8fd1075, type: 3}
+--- !u!4 &1450845335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450845333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1063.0105, y: 563.4398, z: -40.972878}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1471056149
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,8 +3825,6 @@ GameObject:
   - component: {fileID: 1666081061}
   - component: {fileID: 1666081060}
   - component: {fileID: 1666081059}
-  - component: {fileID: 1666081062}
-  - component: {fileID: 1666081063}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3847,39 +3897,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1666081062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666081058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7889cd19c9bb5b498d4d0649187ef2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SetCubePrefab: {fileID: 3636941315559585473, guid: 4195d8ee6be6f2c4eb91250b6d0247fe,
-    type: 3}
-  MainCubicPrefab: {fileID: 302978232411658636, guid: 5d6248e131cdfcc4fbb9811780c9d434,
-    type: 3}
-  SimulatorRightHand: {fileID: 784213106}
-  SteamVRRightHand: {fileID: 206411415}
-  EditUI: {fileID: 1336991426}
---- !u!114 &1666081063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666081058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27d89b062c160ef4688a734e11f8d96e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EditUI: {fileID: 1336991426}
-  FinishSound: {fileID: 8300000, guid: 90053c243ca293849a1118e1f8fd1075, type: 3}
 --- !u!1 &1678023102
 GameObject:
   m_ObjectHideFlags: 0
