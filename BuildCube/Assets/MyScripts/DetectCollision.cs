@@ -49,6 +49,7 @@ public class DetectCollision : MonoBehaviour
         int targetIndex = 0;
         Vector3 center = transforms[0].position;
         float minDistance = 1000;
+
         // 計算方塊離哪個檢查點最近
         for (int i = 1; i < transforms.Length; i++)
         {

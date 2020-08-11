@@ -19,5 +19,7 @@ public class GameSceneRes : GameSceneEntityRes
     public BuildTask MainTask;      // 管理遊戲流程的腳本
     public BuildCubeTask BuildCubeTask; // 用於管理方塊的組裝
 
+    public AudioClip GameInstructionVoice;  // 遊戲說明語音
     public AudioClip FinishSound;   // 完成音效
+
 }

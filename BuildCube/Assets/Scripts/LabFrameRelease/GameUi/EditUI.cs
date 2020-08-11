@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
 using UnityEngine.UI;
+using LabData;
 
 public class EditUI : MonoBehaviour
 {
     public Mode CurrentMode;    // 目前的模式(編輯或刪除模式)
-    public Text TimerText;
-    public Text ResultText;
+    public Text InstructionText;    // 遊戲說明
+    public Text TimerText;      // 計時器
+    public Text ResultText;     // 顯示結果
 
     private GameSceneRes sceneRes;
     private IEnumerator timer;
@@ -45,6 +47,8 @@ public class EditUI : MonoBehaviour
     /// </summary>
     private void StartTimer()
     {
+        InstructionText.gameObject.SetActive(false);
+        TimerText.gameObject.SetActive(true);
         timer = Timer();
         StartCoroutine(timer);
     }
@@ -79,5 +83,7 @@ public class EditUI : MonoBehaviour
         TimerText.gameObject.SetActive(false);
         ResultText.transform.parent.gameObject.SetActive(true);
         ResultText.text = "花費時間： " + TimerText.text + "秒";
+
+        GameDataManager.LabDataManager.SendData(new OutputData(float.Parse(TimerText.text)));
     }
 }

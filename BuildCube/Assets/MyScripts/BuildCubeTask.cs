@@ -37,30 +37,31 @@ public class BuildCubeTask : TaskBase
             cameraObject = sceneRes.SteamVRCamera.gameObject;
         }
 
-        // 產生第一個方塊
+        // 產生第一個方塊掛在右手把
         GameObject centerCube = CreateAndSetCube(new Vector3(0, 0, 0));
         centerCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.cyan);
         centerCube.name = "Cube0";
         center.transform.localPosition = new Vector3(0, 0, 0);
-        controllerEvents = (controllerEvents ? GameObject.FindObjectOfType<VRTK.VRTK_ControllerEvents>() : controllerEvents);
+        controllerEvents = Object.FindObjectOfType<VRTK_ControllerEvents>();
     }
 
     public override IEnumerator TaskStart()
     {
         while (sceneRes.MainTask.CurrentState == GameState.Running)
         {
-            // 創造被移動的方塊
+            // 創造被移動的方塊(SetCube)
             if (setCube == null && sceneRes.EditUI.CurrentMode == Mode.Edit)
             {
-                setCube = Object.Instantiate(sceneRes.SetCubePrefab, cameraPosition + new Vector3(0, 0, 0.5f), new Quaternion(0, 0, 0, 0));
+                setCube = Object.Instantiate(sceneRes.SetCubePrefab, Vector3.zero, Quaternion.identity);
                 setCube.GetComponent<Renderer>().material.mainTexture = CubeCreator.instance.Fill(Color.white);
                 setCube.transform.localScale = new Vector3(1, 1, 1) * 0.05f;
             }
-            // 取得攝影機位置
+
+            // 取得攝影機位置並讓SetCube跟隨攝影機
             cameraPosition = cameraObject.transform.position;
             if (setCube != null && setCube.GetComponentsInChildren<Transform>().Length <= 1)   // 如果還沒拿起setCube(白色方塊)
             {
-                setCube.transform.position = cameraPosition + new Vector3(0, 0, 0.5f);
+                setCube.transform.position = cameraPosition + new Vector3(-0.2f, 0, 0.5f);
             }
             yield return null;
         }
@@ -97,8 +98,6 @@ public class BuildCubeTask : TaskBase
     /// </summary>
     public void EditModeInitialize()
     {
-        if (controllerEvents != null)
-            return;
         foreach (Renderer renderer in center.GetComponentsInChildren<Renderer>())
         {
             if (renderer.gameObject.name != "Cube0")

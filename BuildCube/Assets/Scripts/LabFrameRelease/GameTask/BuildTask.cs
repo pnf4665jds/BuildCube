@@ -9,7 +9,7 @@ public class BuildTask : TaskBase
     public GameState CurrentState { get; private set; } = GameState.Prepare;
 
     private GameSceneRes sceneRes;      // 管理目前場景的資源
-    private GameObject TargetCube;      // 要蓋的目標方塊
+    private GameObject TargetCube;      // 要拼出的目標方塊
     private GameObject BuildingCube;    // 手上的方塊
     private List<float> TargetDistanceList;     // 紀錄目標方塊中兩兩小方塊的彼此距離，並排序
     private List<float> BuildingDistanceList;   // 紀錄操作方塊中兩兩小方塊的彼此距離，並排序
@@ -27,11 +27,20 @@ public class BuildTask : TaskBase
     /// <returns></returns>
     public override IEnumerator TaskStart()
     {
+        // 設置目標方塊
         SetTargetCube();
+
+        // 播放提示語音
+        yield return new WaitForSeconds(0.5f);
+        GameAudioController.Instance.PlayOneShot(sceneRes.GameInstructionVoice);
+        yield return new WaitForSeconds(sceneRes.GameInstructionVoice.length);
+
+        // 開始遊戲
         CurrentState = GameState.Running;
         GameEventCenter.DispatchEvent("StartTimer");
         GameEventCenter.DispatchEvent("BuildStart");
 
+        // 持續判斷玩家是否拼出正確方塊
         BuildingCube = GameObject.FindWithTag("MainCubic");
         while (CurrentState == GameState.Running)
         {
@@ -41,7 +50,7 @@ public class BuildTask : TaskBase
             yield return new WaitUntil(() => TargetCube.transform.childCount == BuildingCube.transform.childCount);
             CheckIfSame();
         }
-        Debug.Log("win");
+        Debug.Log("Win");
         GameEventCenter.DispatchEvent("StopTimer");
     }
 
@@ -51,10 +60,14 @@ public class BuildTask : TaskBase
         sceneRes.LeftEvent.enabled = false;
         sceneRes.RightEvent.enabled = false;
 
+        // 顯示結果，並回到UI
         sceneRes.EditUI.ShowResult();
         GameAudioController.Instance.PlayOneShot(sceneRes.FinishSound);
         yield return new WaitForSeconds(sceneRes.FinishSound.length);
-        SceneManager.LoadScene("MainUI");
+        GameApplication.Instance.GameApplicationDispose();
+        yield return new WaitForSeconds(1);
+        GameApplication.Instance.GameApplicationInit();
+        GameSceneManager.Instance.Change2MainUI();
     }
 
     /// <summary>
@@ -65,8 +78,10 @@ public class BuildTask : TaskBase
         TargetCube = CubeCreator.instance.GetCubic(GameDataManager.FlowData.TargetCubeName);
         TargetCube.AddComponent<TargetCubeEntity>().EntityInit();    // 添加Entity腳本使其能夠跟隨頭盔
         TargetCube.transform.localScale = Vector3.one;
+        TargetCube.transform.localRotation = Random.rotation;
         TargetDistanceList = new List<float>();
 
+        // 紀錄每個方塊彼此的距離(目標方塊)
         Transform[] transforms = TargetCube.GetComponentsInChildren<Transform>();
         for(int i = 1; i < transforms.Length - 1; i++)
         {
@@ -85,6 +100,7 @@ public class BuildTask : TaskBase
     {
         BuildingDistanceList = new List<float>();
 
+        // 紀錄每個方塊彼此的距離(手上的方塊)
         CheckCollision[] checkCollisions = BuildingCube.GetComponentsInChildren<CheckCollision>();
         for (int i = 0; i < checkCollisions.Length - 1; i++)
         {
@@ -95,6 +111,7 @@ public class BuildTask : TaskBase
         }
         BuildingDistanceList.Sort();
 
+        // 兩組List必須完全符合才算正確
         for(int i = 0; i < BuildingDistanceList.Count; i++)
         {
             if (TargetDistanceList[i] != BuildingDistanceList[i])

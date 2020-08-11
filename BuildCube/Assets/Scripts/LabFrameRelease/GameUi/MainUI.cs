@@ -32,6 +32,7 @@ public class MainUI : MonoBehaviour
                 flowData.TargetCubeName = CubeDropdown.captionText.text;
                 // 存放在GameDataManager讓其他場景存取
                 GameDataManager.FlowData = flowData;
+                GameDataManager.LabDataManager.LabDataCollectInit(() => GameDataManager.FlowData.UserId);
                 GameSceneManager.Instance.Change2MainScene();
             }
         });
