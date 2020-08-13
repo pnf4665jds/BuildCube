@@ -27,7 +27,7 @@ public class TargetCubeEntity : GameEntityBase
     private void Update()
     {
         if(cameraObject)
-            transform.position = cameraObject.transform.position + new Vector3(0, -0.5f, 1f);
+            transform.position = cameraObject.transform.position + new Vector3(0, 0, 1f);
     }
 
     public override void EntityDispose()

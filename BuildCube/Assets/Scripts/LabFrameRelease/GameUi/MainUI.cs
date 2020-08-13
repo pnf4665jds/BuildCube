@@ -67,7 +67,8 @@ public class MainUI : MonoBehaviour
         if (cube)
             Destroy(cube);
         cube = CubeCreator.instance.GetCubic(name);
-        cube.transform.position = new Vector3(6, 0, 0);
+        cube.transform.position = new Vector3(388, -77, 514);
+        cube.transform.localScale *= 50;
         if (rotate != null)
             StopCoroutine(rotate);
         rotate = Rotate();

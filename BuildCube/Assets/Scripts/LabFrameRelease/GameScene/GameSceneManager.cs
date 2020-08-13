@@ -50,6 +50,8 @@ public class GameSceneManager : MonoSingleton<GameSceneManager>, IGameManager
     {
         ChangeScene(new List<Action>()
         {
+            () => Cursor.visible = true,
+            () => Cursor.lockState = CursorLockMode.None,
             GameUIManager.Instance.StartMainUiLogic
             //TODO 转场UI需要做的事情
         }, GobalData.MainUiScene);

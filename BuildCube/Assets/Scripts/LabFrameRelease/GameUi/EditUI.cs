@@ -80,9 +80,9 @@ public class EditUI : MonoBehaviour
     /// </summary>
     public void ShowResult()
     {
-        TimerText.gameObject.SetActive(false);
         ResultText.transform.parent.gameObject.SetActive(true);
-        ResultText.text = "花費時間： " + TimerText.text + "秒";
+        ResultText.text = "花費時間：" + TimerText.text + "秒";
+        TimerText.gameObject.SetActive(false);
 
         GameDataManager.LabDataManager.SendData(new OutputData(float.Parse(TimerText.text)));
     }
