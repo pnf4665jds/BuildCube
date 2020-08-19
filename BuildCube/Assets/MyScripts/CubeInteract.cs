@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class CubeInteract : MonoBehaviour
 {
-    public AudioClip DeleteSound;   // 刪除方塊音效
-
     public void DestroyCube()
     {
         if (this.name != "Cube0")
         {
             Destroy(this.gameObject);
-            GameAudioController.Instance.PlayOneShot(DeleteSound);
+            GameAudioController.Instance.PlayOneShot(GameEntityManager.Instance.GetCurrentSceneRes<GameSceneRes>().DeleteSound);
         }
     }
 }

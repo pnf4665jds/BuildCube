@@ -3529,8 +3529,11 @@ MonoBehaviour:
     type: 3}
   SimulatorRightHand: {fileID: 784213106}
   SteamVRRightHand: {fileID: 206411415}
+  SetCubeSound: {fileID: 8300000, guid: 26150a8c43ed65247bb75d17d265bdcd, type: 3}
+  DeleteSound: {fileID: 8300000, guid: 816edcf2414977041a35382cacd55ed7, type: 3}
   GameInstructionVoice: {fileID: 8300000, guid: 2c8d388d768e71a4f9cc04cc8b6205b0,
     type: 3}
+  NotCorrectSound: {fileID: 8300000, guid: e602e9d82f391894295996c710293773, type: 3}
   FinishSound: {fileID: 8300000, guid: 90053c243ca293849a1118e1f8fd1075, type: 3}
 --- !u!4 &1450845335
 Transform:

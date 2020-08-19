@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CheckCollision : MonoBehaviour
 {
-    public AudioClip SetCubeSound;  // 設置方塊音效
-
     // 小方塊的六個方位
     private Vector3[] position = { new Vector3(0.5f, 0, 0),
                                       new Vector3(-0.5f, 0, 0),
@@ -67,7 +65,8 @@ public class CheckCollision : MonoBehaviour
             {
                 if (connect)
                 {
-                    GameAudioController.Instance.PlayOneShot(SetCubeSound);
+                   
+                    GameAudioController.Instance.PlayOneShot(GameEntityManager.Instance.GetCurrentSceneRes<GameSceneRes>().SetCubeSound);
                     Connect(i);
                     hit.collider.gameObject.GetComponent<CheckCollision>().Connect((i % 2 == 0) ? i + 1 : i - 1);
                 }

@@ -115,7 +115,10 @@ public class BuildTask : TaskBase
         for(int i = 0; i < BuildingDistanceList.Count; i++)
         {
             if (TargetDistanceList[i] != BuildingDistanceList[i])
+            {
+                GameAudioController.Instance.PlayOneShot(sceneRes.NotCorrectSound);
                 return;
+            }
         }
 
         CurrentState = GameState.Finish;
