@@ -12,6 +12,7 @@ public class MainUI : MonoBehaviour
     public Button StartButton, QuitButton;
     public Dropdown CubeDropdown;
     public GameObject CubeParent;
+    public Text WarningText;
 
     private GameObject cube;
     private IEnumerator rotate;
@@ -24,7 +25,17 @@ public class MainUI : MonoBehaviour
 
         StartButton.onClick.AddListener(delegate
         {
-            if (CubeDropdown.captionText.text != "--")
+            if (string.IsNullOrEmpty(IdField.text))
+            {
+                WarningText.text = "請輸入ID";
+                OpenWarning();
+            }
+            else if (CubeDropdown.captionText.text == "--")
+            {
+                WarningText.text = "請選擇方塊";
+                OpenWarning();
+            }
+            else
             {
                 // 生成一個GameFlowData來儲存所需資料
                 GameFlowData flowData = new GameFlowData();
@@ -82,5 +93,15 @@ public class MainUI : MonoBehaviour
             yield return null;
             cube.transform.Rotate(new Vector3(0, -1, 0));
         }
+    }
+
+    public void OpenWarning()
+    {
+        WarningText.transform.parent.gameObject.SetActive(true);
+    }
+
+    public void CloseWarning()
+    {
+        WarningText.transform.parent.gameObject.SetActive(false);
     }
 }

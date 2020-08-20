@@ -4,6 +4,7 @@ using UnityEngine;
 using VRTK;
 using UnityEngine.UI;
 using LabData;
+using UnityEngine.UIElements;
 
 public class EditUI : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EditUI : MonoBehaviour
     public Text InstructionText;    // 遊戲說明
     public Text TimerText;      // 計時器
     public Text ResultText;     // 顯示結果
+    public UnityEngine.UI.Image ErrorImage;    // 叉叉圖案
 
     private GameSceneRes sceneRes;
     private IEnumerator timer;
@@ -72,6 +74,26 @@ public class EditUI : MonoBehaviour
             yield return null;
             time += Time.deltaTime;
             TimerText.text = time.ToString("0.00");
+        }
+    }
+
+    /// <summary>
+    /// 顯示錯誤圖示
+    /// </summary>
+    /// <returns></returns>
+    public void ShowErrorImage()
+    {
+        StartCoroutine(TransparentImage());
+    }
+
+    public IEnumerator TransparentImage()
+    {
+        float alpha = 1;
+        while (alpha > 0)
+        {
+            alpha -= 0.006f;
+            ErrorImage.color = new Color(1, 1, 1, alpha);
+            yield return null;
         }
     }
 

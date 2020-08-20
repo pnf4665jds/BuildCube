@@ -117,6 +117,7 @@ public class BuildTask : TaskBase
             if (TargetDistanceList[i] != BuildingDistanceList[i])
             {
                 GameAudioController.Instance.PlayOneShot(sceneRes.NotCorrectSound);
+                sceneRes.EditUI.ShowErrorImage();
                 return;
             }
         }
