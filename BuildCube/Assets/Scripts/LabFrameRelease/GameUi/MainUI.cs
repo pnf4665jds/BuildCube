@@ -90,7 +90,7 @@ public class MainUI : MonoBehaviour
     {
         while (true)
         {
-            yield return null;
+            yield return new WaitForSeconds(0.01f);
             cube.transform.Rotate(new Vector3(0, -1, 0));
         }
     }
